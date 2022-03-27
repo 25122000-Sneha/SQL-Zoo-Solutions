@@ -12,7 +12,7 @@ Solutions to questions on (http://sqlzoo.net/wiki/SQL_Tutorial).
 8. [Using NULL](#using-null)
 9. [Self JOIN](#self-join)
 
-##SELECT Basics
+## SELECT Basics:
 
 1.
 ```sql
@@ -85,7 +85,7 @@ select name, ROUND(gdp/population,-3) from world
   where gdp > 1000000000000
 ```
 
-##SELECT FROM nobel
+## SELECT FROM nobel
 1.
 ```sql
 SELECT yr, subject, winner
@@ -143,7 +143,7 @@ SELECT * FROM nobel
 WHERE (subject LIKE 'Medicine' AND yr < 1910)
 OR (subject LIKE 'Literature' AND yr>=2004);
 ```
-###Harder Questions
+### Harder Questions:
 11.
 ```sql
 SELECT yr,subject,winner FROM nobel
