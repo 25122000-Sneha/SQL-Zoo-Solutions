@@ -71,8 +71,10 @@ select name, population, area from world
 ```
 8.
 ```sql
-select name, population, area from world
-  where population > 250000000 xor area > 3000000
+SELECT name,population,area 
+FROM world
+WHERE (area > 3000000 AND population < 250000000) 
+OR (area <3000000 AND population > 250000000);
 ```
 9.
 ```sql
