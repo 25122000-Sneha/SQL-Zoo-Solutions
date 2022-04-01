@@ -171,3 +171,44 @@ SELECT winner, subject
  ORDER BY subject IN('Physics', 'Chemistry'),subject,winner;
  ```
  
+##Select in Select
+1.
+```sql
+SELECT name FROM world
+  WHERE population >
+     (SELECT population FROM world
+      WHERE name='Russia')
+```
+2.
+```sql
+SELECT name 
+FROM world
+WHERE gdp/population > 
+(SELECT gdp/population FROM world
+WHERE name LIKE 'United Kingdom') AND
+continent LIKE 'Europe';
+```
+3.
+```sql
+SELECT name,continent 
+FROM world
+WHERE continent IN 
+(SELECT continent FROM world WHERE name IN ('Argentina', 'Australia'));
+```
+4.
+```sql
+SELECT name, population FROM world
+WHERE population > 
+(SELECT population FROM world WHERE name LIKE 'Canada') AND 
+population < 
+(SELECT population FROM world WHERE name LIKE 'Poland');
+```
+5.
+```sql
+SELECT name, 
+CONCAT(CAST(ROUND((population/(SELECT population FROM world 
+WHERE name LIKE 'Germany'))*100, 0) AS INT), '%') "percentage"
+FROM world
+WHERE continent LIKE 'Europe';
+```
+
