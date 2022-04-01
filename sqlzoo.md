@@ -218,7 +218,7 @@ WHERE gdp >
 ALL(SELECT gdp FROM world 
 WHERE continent LIKE 'Europe' AND gdp>0);
 ```
-###Correlated Subqueries
+### Correlated Subqueries
 7.
 ```sql
 SELECT continent, name,area FROM world x
