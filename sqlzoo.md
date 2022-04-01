@@ -211,4 +211,39 @@ WHERE name LIKE 'Germany'))*100, 0) AS INT), '%') "percentage"
 FROM world
 WHERE continent LIKE 'Europe';
 ```
-
+6.
+```sql
+SELECT name FROM world
+WHERE gdp >
+ALL(SELECT gdp FROM world 
+WHERE continent LIKE 'Europe' AND gdp>0);
+```
+###Correlated Subqueries
+7.
+```sql
+SELECT continent, name,area FROM world x
+  WHERE area >= ALL
+    (SELECT area FROM world y
+        WHERE y.continent=x.continent
+          AND area>0)
+```
+8.
+```sql
+SELECT continent, name 
+FROM world x 
+WHERE name <= ALL(SELECT name FROM world y 
+WHERE x.continent = y.continent);
+```
+9.
+```sql
+select name, continent, population
+from world x
+where 25000000 >= all(select population from world y where x.continent=y.continent);
+```
+10.
+```sql
+select name, continent
+from world x
+where x.population > all(select 3*y.population from world y
+where x.continent = y.continent and x.name!=y.name);
+```
