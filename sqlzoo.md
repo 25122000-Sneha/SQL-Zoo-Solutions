@@ -296,3 +296,97 @@ from world
 group by continent
 having sum(population) >= 100000000;
 ```
+## JOIN
+1.
+```sql
+SELECT matchid, player
+FROM goal 
+WHERE teamid = 'GER';
+```
+2.
+```sql
+SELECT id,stadium,team1,team2
+FROM game
+WHERE id = 1012;
+```
+3.
+```sql
+SELECT player, teamid, stadium, mdate
+from game JOIN goal
+ON game.id = goal.matchid
+WHERE teamid = 'GER';
+```
+4.
+```sql
+SELECT team1, team2, player 
+FROM game JOIN goal
+ON game.id = goal.matchid
+WHERE player LIKE 'Mario%';
+```
+5.
+```sql
+SELECT player, teamid, coach, gtime
+FROM goal JOIN eteam
+ON goal.teamid = eteam.id
+WHERE gtime<=10;
+```
+6.
+```sql
+SELECT mdate, teamname
+FROM game JOIN eteam
+ON game.team1 = eteam.id
+WHERE coach LIKE 'Fernando Santos';
+```
+7.
+```sql
+SELECT player
+FROM game JOIN goal
+ON game.id = goal.matchid
+WHERE stadium LIKE 'National Stadium, Warsaw';
+```
+### Hard Questions:
+8.
+```sql
+SELECT DISTINCT player
+FROM game JOIN goal ON matchid = id
+WHERE (teamid = team1 AND team2 LIKE 'GER') OR (teamid = team2 AND team1 LIKE 'GER');
+```
+9.
+```sql
+SELECT teamname, count(teamid)
+FROM eteam JOIN goal ON id=teamid
+GROUP BY teamname;
+```
+10.
+SELECT stadium, count(teamid)
+FROM game JOIN goal
+ON matchid = id
+GROUP BY stadium;
+```
+11.
+```sql
+SELECT matchid,mdate,count(teamid)
+FROM game JOIN goal ON matchid = id 
+WHERE (team1 = 'POL' OR team2 = 'POL')
+GROUP BY matchid, mdate;
+```
+12.
+```sql
+SELECT matchid, mdate, count(teamid)
+FROM game JOIN goal
+ON matchid = id
+WHERE teamid LIKE 'GER'
+GROUP BY matchid, mdate;
+```
+13.
+```sql
+SELECT game.mdate, game.team1, 
+SUM(CASE WHEN goal.teamid = game.team1 THEN 1 ELSE 0 END) AS score1,
+game.team2,
+SUM(CASE WHEN goal.teamid = game.team2 THEN 1 ELSE 0 END) AS score2
+FROM game LEFT JOIN goal ON matchid = id
+GROUP BY game.id,game.mdate, game.team1, game.team2 
+ORDER BY mdate,team1,team2;
+```
+
+
