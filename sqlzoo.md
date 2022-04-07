@@ -358,6 +358,7 @@ FROM eteam JOIN goal ON id=teamid
 GROUP BY teamname;
 ```
 10.
+```sql
 SELECT stadium, count(teamid)
 FROM game JOIN goal
 ON matchid = id
