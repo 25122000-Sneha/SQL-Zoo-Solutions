@@ -389,5 +389,67 @@ FROM game LEFT JOIN goal ON matchid = id
 GROUP BY game.id,game.mdate, game.team1, game.team2 
 ORDER BY mdate,team1,team2;
 ```
+## More Join
+1.
+```sql
+SELECT id, title
+ FROM movie
+ WHERE yr=1962;
+ ```
+ 2.
+ ```sql
+ SELECT yr
+FROM movie
+WHERE title LIKE 'Citizen Kane';
+```
+3.
+SELECT id, title, yr
+FROM movie
+WHERE title LIKE '%Star Trek%'
+ORDER BY yr;
+```
+4.
+```sql
+SELECT id
+FROM actor
+WHERE name LIKE 'Glenn Close';
+```
+5.
+```sql
+SELECT id
+FROM movie
+WHERE title LIKE 'Casablanca';
+```
+6.
+```sql
+SELECT name
+FROM actor, casting
+WHERE movieid=(SELECT id from movie WHERE title LIKE 'Casablanca') AND casting.actorid = actor.id;
+```
+7.
+```sql
+SELECT name
+FROM actor JOIN casting 
+ON id=actorid AND movieid = (SELECT id FROM movie WHERE title = 'Alien');
+```
+8.
+```sql
+SELECT title FROM casting, movie
+WHERE movieid = id and actorid = (SELECT id FROM actor WHERE name LIKE 'Harrison Ford');
+```
+9.
+```sql
+SELECT title FROM casting, movie
+WHERE movieid = id and actorid = (SELECT id FROM actor WHERE name LIKE 'Harrison Ford') and ord<>1;
+```
+10.
+```sql
+SELECT title, name
+FROM movie, actor, casting
+WHERE yr=1962 AND ord=1 AND movieid=movie.id
+AND actorid=actor.id;
+```
+
+
 
 
