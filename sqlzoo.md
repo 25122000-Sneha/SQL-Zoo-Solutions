@@ -450,6 +450,33 @@ FROM movie, actor, casting
 WHERE yr=1962 AND ord=1 AND movieid=movie.id
 AND actorid=actor.id;
 ```
+### Harder Questions
+11.
+```sql
+SELECT yr,COUNT(title) FROM
+  movie JOIN casting ON movie.id=movieid
+        JOIN actor   ON actorid=actor.id
+WHERE name='Rock Hudson'
+GROUP BY yr
+HAVING COUNT(title) > 1;
+```
+12.
+```sql
+SELECT title, name FROM casting, movie, actor
+WHERE movie.id IN (SELECT movieid FROM casting
+WHERE actorid IN (
+  SELECT id FROM actor
+  WHERE name='Julie Andrews')) AND ord=1 AND casting.movieid=movie.id AND casting.actorid = actor.id;
+```
+13.
+```sql
+SELECT title, name FROM casting, movie, actor
+WHERE movie.id IN (SELECT movieid FROM casting
+WHERE actorid IN (
+  SELECT id FROM actor
+  WHERE name='Julie Andrews')) AND ord=1 AND casting.movieid=movie.id AND casting.actorid = actor.id;
+```
+
 
 
 
