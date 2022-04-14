@@ -470,12 +470,34 @@ WHERE actorid IN (
 ```
 13.
 ```sql
-SELECT title, name FROM casting, movie, actor
-WHERE movie.id IN (SELECT movieid FROM casting
-WHERE actorid IN (
-  SELECT id FROM actor
-  WHERE name='Julie Andrews')) AND ord=1 AND casting.movieid=movie.id AND casting.actorid = actor.id;
+SELECT name 
+FROM actor
+WHERE id IN 
+(SELECT actorid FROM CASTING
+WHERE ord = 1
+GROUP BY actorid
+HAVING count(ord) >= 15)
+ORDER BY name;
 ```
+14.
+```sql
+SELECT title, COUNT(actorid) 
+FROM movie JOIN casting
+ON movie.id = casting.movieid
+WHERE yr = 1978
+GROUP BY title
+ORDER BY COUNT(actorid) DESC, title;
+```
+15.
+```sql
+SELECT DISTINCT name
+FROM actor JOIN casting
+ON actor.id = casting.actorid
+WHERE movieid IN (SELECT movieid FROM casting, actor
+WHERE name LIKE 'Art Garfunkel' AND casting.actorid = actor.id)
+AND name NOT LIKE 'Art Garfunkel';
+```
+
 
 
 
